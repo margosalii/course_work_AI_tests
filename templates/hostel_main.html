@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" class = "active">Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "create-announcement-title">Актуальні оголошення</h2>
+
+            {% for ann in announcements %}
+                <div class="announcement">
+                    <h3>{{ ann['title'] | safe}}</h3>
+                    <div class="announcement-content">
+                        {{ ann['content'] | safe }}
+                    </div>
+                    <small><em>{{ ann['created_at'] }}</em></small>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

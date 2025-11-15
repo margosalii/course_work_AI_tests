@@ -1,0 +1,210 @@
+/* Загальні стилі */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.student-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/* Ліве меню */
+.sidebar {
+    width: 15%;
+    background-color: #FCFCCF;
+    color: #000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    color: #b35900;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Меню навігації */
+.nav-menu {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.nav-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+}
+
+.nav-menu li a:hover, .nav-menu .active {
+    background-color: #ff9933; /* Темніший колір для активного пункту */
+    color: white;
+    font-weight: bold;
+}
+
+
+/* Основний контент */
+.main-content {
+    flex: 1;
+    width: 80%;
+    padding: 20px;
+    background-color: white;
+    margin-left: 20%; /* Створюємо відступ зліва для основного контенту */
+    box-sizing: border-box; /* Для коректного розподілу простору */
+    overflow-y: auto;  /* Додаємо вертикальну прокрутку для основного контенту */
+}
+
+/* активний пункт меню */
+.nav-menu li a.active {
+    background-color: #FCFCCF; /* Такий самий фон, як у sidebar */
+    color: #804000;
+    font-size: 18px; /* Збільшений розмір шрифту */
+    font-weight: bold;
+}
+
+.create-announcement-title {
+    text-align: center; /* Центруємо текст */
+    color: #804000; /* Колір */
+    font-size: 32px; /* Збільшуємо розмір */
+    font-weight: bold; /* Жирний текст */
+    margin-bottom: 20px; /* Відступ знизу */
+    font-family: Arial, sans-serif; /* Шрифт */
+}
+
+/* Повідомлення про помилки та успіх */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.alert.danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.alert.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .student-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/* === Форма === */
+form .form-group {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #000000;
+}
+
+form input[type="text"],
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+#editor {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+
+/* Стилі для таблиці */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff7e6; /* Світло-жовтий фон */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #ffcc00; /* Темно-жовті границі */
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ffb300; /* Темно-жовтий заголовок */
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #fff0b3; /* Світло-жовті рядки через один */
+}
+
+tr:hover {
+    background-color: #ffd699; /* Виділення рядка при наведенні */
+}
+
+/* === Кнопка === */
+button[type="submit"] {
+   background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #cc0000;
+}

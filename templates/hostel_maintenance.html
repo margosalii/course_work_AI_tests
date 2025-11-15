@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel_maintenance.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}" class = "active">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Заяви на технічне обслуговування</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Студент</th>
+                        <th>Email</th>
+                        <th>Номер телефону</th>
+                        <th>Гуртожиток</th>
+                        <th>Кімната</th>
+                        <th>Опис проблеми</th>
+                        <th>Дата подачі</th>
+                        <th>Пріоритет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for records in maintenance_records %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ records.first_name }} {{ records.last_name }}</td>
+                        <td>{{ records.email }}</td>
+                        <td>{{ records.telephone_number }}</td>
+                        <td>{{ records.dormitory }}</td>
+                        <td>{{ records.room_number }}</td>
+                        <td>{{ records.issue_description }}</td>
+                        <td>{{ records.created_at }}</td>
+                        <td>{{ records.priority }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

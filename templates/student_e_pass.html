@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_e_pass.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Студент</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('student.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('student.student_statement') }}">Заява на поселення</a></li>
+                    <li><a href="{{ url_for('student.student_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('student.student_e_pass') }}" class = "active">Е-перепустка</a></li>
+                    <li><a href="{{ url_for('student.student_information') }}">Інформація</a></li>
+                    <li><a href="{{ url_for('student.student_maintenance') }}" >Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('student.student_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+             <h2>Е-перепустка</h2>
+            <p class = "qr-info" >Тут буде розміщено функціонал електронної перепустки. Наразі представлено лише приклад QR-коду.</p>
+
+            <div class="qr-code-container">
+                <img src="{{ url_for('static', filename='images/qr.png') }}" alt="Приклад QR-коду">
+                <p class="qr-description">Приклад QR-коду, функціонал буде реалізовано в майбутньому.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

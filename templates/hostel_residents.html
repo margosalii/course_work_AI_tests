@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel_residents.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}" class = "active">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Облік мешканців</h2>
+
+            <!-- Форма пошуку -->
+            <form method="POST" action="{{ url_for('hostel.hostel_residents') }}" class="search-form">
+                <input type="text" name="search" placeholder="Введіть прізвище" value="{{ search_query or '' }}">
+                <button type="submit">Пошук</button>
+            </form>
+
+            <!-- Таблиця з мешканцями -->
+            <table class="residents-table">
+                <thead>
+                    <tr>
+                        <th>Прізвище</th>
+                        <th>Ім'я</th>
+                        <th>По-батькові</th>
+                        <th>Дата народження</th>
+                        <th>Email</th>
+                        <th>Телефон</th>
+                        <th>Факультет</th>
+                        <th>Курс</th>
+                        <th>Група</th>
+                        <th>Гуртожиток</th>
+                        <th>Кімната</th>
+                        <th>Термін проживання</th>
+                        <th>ПІБ батьків</th>
+                        <th>Телефон батьків</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resident in residents %}
+                    <tr>
+                        <td>{{ resident.last_name }}</td>
+                        <td>{{ resident.first_name }}</td>
+                        <td>{{ resident.patronymic }}</td>
+                        <td>{{ resident.birth_date }}</td>
+                        <td>{{ resident.email }}</td>
+                        <td>{{ resident.phone_number }}</td>
+                        <td>{{ resident.faculty }}</td>
+                        <td>{{ resident.course }}</td>
+                        <td>{{ resident.group_name }}</td>
+                        <td>{{ resident.dormitory }}</td>
+                        <td>{{ resident.room_number }}</td>
+                        <td>{{ resident.residence_period }}</td>
+                        <td>{{ resident.parents_full_name }}</td>
+                        <td>{{ resident.parents_phone_number }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

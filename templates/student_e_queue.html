@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_e_queue.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Студент</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('student.main') }}">Головна</a></li>
+                    <li><a href="{{ url_for('student.student_statement') }}">Заява на поселення</a></li>
+                    <li><a href="{{ url_for('student.student_e_queue') }}" class = "active">Е-черга</a></li>
+                    <li><a href="{{ url_for('student.student_e_pass') }}">Е-перепустка</a></li>
+                    <li><a href="{{ url_for('student.student_information') }}">Інформація</a></li>
+                    <li><a href="{{ url_for('student.student_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('student.student_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class="page-title">Електронна черга</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('student.student_e_queue') }}" method="post">
+
+                <label for="date">Дата:</label>
+                <input type="date" id="date" name="date" value="{{ form_data.date }}" required>
+
+                <label for="time">Час:</label>
+                <select id="time" name="time" required>
+                    {% for time in available_times %}
+                        <option value="{{ time }}" {% if time == form_data.time %}selected{% endif %}>{{ time }}</option>
+                    {% endfor %}
+                </select><br>
+
+                <button type="submit">Записатися</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

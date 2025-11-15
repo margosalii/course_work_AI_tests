@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_statement.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Студент</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('student.main') }}">Головна</a></li>
+                    <li><a href="{{ url_for('student.student_statement') }}" class = "active"> Заява на поселення</a></li>
+                    <li><a href="{{ url_for('student.student_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('student.student_e_pass') }}">Е-перепустка</a></li>
+                    <li><a href="{{ url_for('student.student_information') }}">Інформація</a></li>
+                    <li><a href="{{ url_for('student.student_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('student.student_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Заява на поселення</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('student.student_statement') }}" method="POST">
+                <label>Прізвище:</label>
+                <input type="text" name="last_name" required>
+
+                <label>Ім'я:</label>
+                <input type="text" name="first_name" required>
+
+                <label>По-батькові:</label>
+                <input type="text" name="patronymic" required>
+
+                <label>Дата народження:</label>
+                <input type="text" name="birth_date" required>
+
+                <label>Ідентифікаційний номер (10 цифр):</label>
+                <input type="text" name="id_number" required pattern="\d{10}" maxlength="10">
+
+                <label>Номер телефону (в форматі: +(380) 99 165 1650):</label>
+                <input type="text" name="phone" required>
+
+                <label>Факультет:</label>
+                <input type="text" name="faculty" required>
+
+                <label for="course">Курс:</label>
+                <select name="course" id="course" required>
+                    <option value="" disabled selected>Оберіть курс</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+
+                <label>Група (в фоматі: Б-121-21-1-ПІ ):</label>
+                <input type="text" name="group_name" required>
+
+                <label>Оберіть гуртожиток:</label>
+                <select name="dormitory" required>
+                    <option value="Гуртожиток 1">Гуртожиток №1</option>
+                    <option value="Гуртожиток 3">Гуртожиток №3</option>
+                    <option value="Гуртожиток 4">Гуртожиток №4</option>
+                    <option value="Гуртожиток 5">Гуртожиток №5</option>
+                    <option value="Гуртожиток 6">Гуртожиток №6</option>
+                    <option value="Гуртожиток 7">Гуртожиток №7</option>
+                    <option value="Гуртожиток 8">Гуртожиток №8</option>
+                    <option value="Гуртожиток 9">Гуртожиток №9</option>
+                    <option value="Гуртожиток 10">Гуртожиток готельного типу №10</option>
+                    <option value="Гуртожиток 11">Гуртожиток №11</option>
+                    <option value="Гуртожиток 12">Гуртожиток готельного типу №12</option>
+                    <option value="Гуртожиток 13">Гуртожиток №13</option>
+                    <option value="Готельний блок ">Готельний блок</option>
+                </select>
+
+                <label>Оберіть кімнату:</label>
+                <select name="room_number" required>
+                    <option value="361">361</option>
+                    <option value="243">243</option>
+                    <option value="375">375</option>
+                    <option value="214">214</option>
+                    <option value="261">261</option>
+                    <option value="395">395</option>
+                    <option value="396">396</option>
+                    <option value="390">390</option>
+                    <option value="425">425</option>
+                    <option value="332">332</option>
+                    <option value="116">116</option>
+                    <option value="418">418</option>
+                    <option value="175">175</option>
+                </select>
+
+                <button type="submit">Надіслати</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

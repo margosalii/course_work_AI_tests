@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Головна</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Ласкаво просимо до системи управління студентським містечком</h1>
+        <h2>Державного університету "Київський авіаційний інститут"</h2>
+        <div class="buttons">
+            <a href="{{ url_for('authorization.register') }}" class="btn">Зареєструватися</a>
+            <a href="{{ url_for('authorization.login') }}" class="btn">Увійти</a>
+        </div>
+    </div>
+</body>
+</html>

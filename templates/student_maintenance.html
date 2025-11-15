@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_maintenance.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Студент</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('student.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('student.student_statement') }}">Заява на поселення</a></li>
+                    <li><a href="{{ url_for('student.student_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('student.student_e_pass') }}">Е-перепустка</a></li>
+                    <li><a href="{{ url_for('student.student_information') }}">Інформація</a></li>
+                    <li><a href="{{ url_for('student.student_maintenance') }}" class = "active">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('student.student_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "page-title">Форма заяви на технічне обслуговування</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('student.student_maintenance') }}">
+
+                <label for="telephone_number">Номер телефону (введіть в такому форматі: + (380) 99 123 4567):</label>
+                <input type="text" id="telephone_number" name="telephone_number" required>
+
+                <label for="dormitory">Гуртожиток:</label>
+                <select id="dormitory" name="dormitory" required>
+                    <option value="Гуртожиток №1">Гуртожиток №1</option>
+                    <option value="Гуртожиток №3">Гуртожиток №3</option>
+                    <option value="Гуртожиток №4">Гуртожиток №4</option>
+                    <option value="Гуртожиток №5">Гуртожиток №5</option>
+                    <option value="Гуртожиток №6">Гуртожиток №6</option>
+                    <option value="Гуртожиток №7">Гуртожиток №7</option>
+                    <option value="Гуртожиток №8">Гуртожиток №8</option>
+                    <option value="Гуртожиток №9">Гуртожиток №9</option>
+                    <option value="Гуртожиток готельного типу №10">Гуртожиток готельного типу №10</option>
+                    <option value="Гуртожиток №11">Гуртожиток №11</option>
+                    <option value="Гуртожиток готельного типу №12">Гуртожиток готельного типу №12</option>
+                    <option value="Гуртожиток №13">Гуртожиток №13</option>
+                    <option value="Готельний блок">Готельний блок</option>
+                </select>
+
+                <label for="room_number">Номер кімнати:</label>
+                <input type="number" id="room_number" name="room_number" required>
+
+                <label for="issue_type">Тип проблеми:</label>
+                <select id="issue_type" name="issue_type" required>
+                    <option value="Проблеми з електропостачанням">Проблеми з електропостачанням</option>
+                    <option value="Водопостачання / каналізація">Водопостачання / каналізація</option>
+                    <option value="Опалення">Опалення</option>
+                    <option value="Меблі / інвентар">Меблі / інвентар</option>
+                    <option value="Двері / вікна">Двері / вікна</option>
+                    <option value="Інше">Інше</option>
+                </select>
+
+                <label for="issue_description">Опис проблеми:</label>
+                <textarea id="issue_description" name="issue_description" rows="4" required></textarea>
+
+                <label for="priority">Пріоритетність:</label>
+                <select id="priority" name="priority" required>
+                    <option value="Низький">Низький</option>
+                    <option value="Середній">Середній</option>
+                    <option value="Високий">Високий</option>
+                </select>
+
+                <button type="submit">Подати заявку</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

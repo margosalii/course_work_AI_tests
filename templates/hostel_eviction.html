@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel_eviction.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}" class = "active">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Інформація про студентів для виселення</h2>
+
+            <!-- Повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Форма для пошуку -->
+            <form class="search-form" method="POST" action="{{ url_for('hostel.hostel_eviction') }}">
+                <input type="text" id="last_name_search" name="last_name_search" placeholder="Введіть прізвище">
+                <button type="submit" name="search" class="btn btn-primary">Пошук</button>
+            </form>
+
+            <!-- Таблиця студентів -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Прізвище</th>
+                        <th>Ім'я</th>
+                        <th>По батькові</th>
+                        <th>Дата народження</th>
+                        <th>Гуртожиток</th>
+                        <th>Кімната</th>
+                        <th>Термін проживання</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resident in residents %}
+                    <tr>
+                        <td>{{ resident.last_name }}</td>
+                        <td>{{ resident.first_name }}</td>
+                        <td>{{ resident.patronymic }}</td>
+                        <td>{{ resident.birth_date }}</td>
+                        <td>{{ resident.dormitory }}</td>
+                        <td>{{ resident.room_number }}</td>
+                        <td>{{ resident.residence_period }}</td>
+                        <td>
+                            <!-- Форма для виселення студента -->
+                            <form  method="POST" action="{{ url_for('hostel.hostel_eviction') }}">
+                                <input type="hidden" name="resident_id" value="{{ resident.id }}">
+                                <button type="submit" class="btn btn-danger">Виселити</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

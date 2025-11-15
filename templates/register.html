@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleregister.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Реєстрація</h2>
+
+        <!-- Виведення flash-повідомлень -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('authorization.register') }}">
+            <label for="email">Електронна пошта:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" required>
+
+            <label for="first_name">Ім'я:</label>
+            <input type="text" name="first_name" id="first_name" required>
+
+            <label for="last_name">Прізвище:</label>
+            <input type="text" name="last_name" id="last_name" required>
+
+            <button type="submit">Зареєструватися</button>
+        </form>
+
+        <p>Вже маєте акаунт? <a href="{{ url_for('authorization.login') }}">Увійти</a></p>
+    </div>
+
+</body>
+</html>

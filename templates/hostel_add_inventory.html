@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel_add_inventory.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}" class = "active">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Закріплення інвентарю за студентом</h2>
+
+            <!-- Повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div>
+                    <label for="resident_id">Вибір мешканця:</label>
+                    <select name="resident_id" id="resident_id" required>
+                        <option value="">Оберіть студента</option>
+                        {% for resident in residents %}
+                            <option value="{{ resident.id }}">{{ resident.last_name }} {{ resident.first_name }} {{ resident.patronymic }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="inventory_type">Тип інвентарю:</label>
+                    <select name="inventory_type" id="inventory_type" required>
+                        <option value="Твердий інвентар">Твердий інвентар</option>
+                        <option value="М'який інвентар">М'який інвентар</option>
+                        <option value="Інше">Інше</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="inventory_item">Назва інвентарю:</label>
+                    <input type="text" name="inventory_item" id="inventory_item" required>
+                </div>
+
+                <div>
+                    <label for="inventory_code">Код інвентарю:</label>
+                    <input type="text" name="inventory_code" id="inventory_code" required>
+                </div>
+
+                <button type="submit">Закріпити інвентар</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

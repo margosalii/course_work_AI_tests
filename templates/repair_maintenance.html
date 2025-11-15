@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/repair_maintenance.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Експлуатаційний відділ</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('repair.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('repair.repair_maintenance') }}" class = "active">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('repair.repair_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('repair.repair_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Заяви на технічне обслуговування</h2>
+
+            <!-- Виведення flash-повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ім'я</th>
+                        <th>Прізвище</th>
+                        <th>Email</th>
+                        <th>Номер телефону</th>
+                        <th>Гуртожиток</th>
+                        <th>Номер кімнати</th>
+                        <th>Тип проблеми</th>
+                        <th>Опис проблеми</th>
+                        <th>Пріоритет</th>
+                        <th>Дата створення</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in maintenance_records %}
+                    <tr>
+                        <td>{{ record.first_name }}</td>
+                        <td>{{ record.last_name }}</td>
+                        <td>{{ record.email }}</td>
+                        <td>{{ record.telephone_number }}</td>
+                        <td>{{ record.dormitory }}</td>
+                        <td>{{ record.room_number }}</td>
+                        <td>{{ record.issue_type }}</td>
+                        <td>{{ record.issue_description }}</td>
+                        <td>{{ record.priority }}</td>
+                        <td>{{ record.created_at }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('repair.repair_maintenance') }}">
+                                <input type="hidden" name="maintenance_id" value="{{ record.id }}">
+                                <button type="submit" class="btn btn-success">Виконано</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

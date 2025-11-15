@@ -1,0 +1,158 @@
+/* Загальні стилі */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.student-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/* Ліве меню */
+.sidebar {
+    width: 15%;
+    background-color: #E0F7FA;
+    color: #000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    color: #000099;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Меню навігації */
+.nav-menu {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.nav-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+}
+
+.nav-menu li a:hover, .nav-menu .active {
+    background-color: #000066; /* Темніший колір для активного пункту */
+    color: white;
+    font-weight: bold;
+}
+
+
+/* Основний контент */
+.main-content {
+    flex: 1;
+    width: 80%;
+    padding: 20px;
+    background-color: white;
+    margin-left: 20%; /* Створюємо відступ зліва для основного контенту */
+    box-sizing: border-box; /* Для коректного розподілу простору */
+    overflow-y: auto;  /* Додаємо вертикальну прокрутку для основного контенту */
+}
+
+/* активний пункт меню */
+.nav-menu li a.active {
+    background-color: #E0F7FA; /* Такий самий фон, як у sidebar */
+    color: #000066; /* Темно-синій */
+    font-size: 18px; /* Збільшений розмір шрифту */
+    font-weight: bold;
+}
+
+/* Заголовок "Інформація про студента" по центру */
+.main-content h2 {
+    text-align: center;
+    color: #000099; /* Темно-блакитний для заголовку */
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* Карточка студента */
+.student-card {
+    background-color: #F0F8FF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.student-card p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #333;
+}
+
+.student-card strong {
+    color: #007C91;
+}
+
+/* Секції (технічне обслуговування, порушення, інвентар) */
+.main-content h3 {
+    color: #000099;
+    font-size: 24px;
+    margin-top: 30px;
+    border-bottom: 2px solid #00B8D4;
+    padding-bottom: 10px;
+}
+
+hr {
+    border: 1px solid #E0E0E0;
+}
+
+/* Виправлення для секцій: Технічне обслуговування, Порушення, Закріплений інвентар */
+.maintenance-card, .violations-card, .inventory-card {
+    background-color: #F0F8FF; /* Легкий блакитний фон для карток */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.maintenance-card p, .violations-card p, .inventory-card p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #333;
+}
+
+/* Заголовки всередині карток */
+.maintenance-card strong, .violations-card strong, .inventory-card strong {
+    color: #007C91; /* Бірюзовий колір для типів проблем та інших важливих елементів */
+}
+
+/* Підзаголовки типів проблем */
+.maintenance-card h4, .violations-card h4, .inventory-card h4 {
+    color: #007C91; /* Бірюзовий для заголовків типів проблем */
+    font-size: 18px;
+    margin-top: 10px;
+}
+

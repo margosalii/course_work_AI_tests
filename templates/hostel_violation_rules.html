@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel_violation_rules.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}" class = "active">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Порушення правил проживання</h2>
+
+            <!-- Повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('hostel.hostel_violation_rules') }}" method="POST">
+                <label for="resident">Студент:</label>
+                <select name="resident_id" id="resident" required>
+                    <option value="">Оберіть студента</option>
+                    {% for resident in residents %}
+                    <option value="{{ resident.id }}">{{ resident.last_name }} {{ resident.first_name }} {{ resident.patronymic }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="violation_type">Тип порушення:</label>
+                <select name="violation_type" id="violation_type" required>
+                    <option value="шум після 22:00">Шум після 22:00</option>
+                    <option value="куріння у гуртожитку">Куріння у гуртожитку</option>
+                    <option value="вживання алкоголю">Вживання алкоголю</option>
+                    <option value="псування майна">Псування майна</option>
+                    <option value="інше">Інше</option>
+                </select>
+
+                <label for="description">Опис порушення:</label>
+                <textarea name="description" id="description" rows="4" required></textarea>
+
+                <label for="penalty">Штраф/Покарання:</label>
+                <input type="text" name="penalty" id="penalty">
+
+                <button type="submit" class="btn-submit">Додати порушення</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

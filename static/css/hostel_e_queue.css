@@ -1,0 +1,164 @@
+/* Загальні стилі */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.student-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/* Ліве меню */
+.sidebar {
+    width: 15%;
+    background-color: #e6ccff;
+    color: #000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    color: #7700e6;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Меню навігації */
+.nav-menu {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.nav-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+}
+
+.nav-menu li a:hover, .nav-menu .active {
+    background-color: #600080; /* Темніший колір для активного пункту */
+    color: white;
+    font-weight: bold;
+}
+
+
+/* Основний контент */
+.main-content {
+    flex: 1;
+    width: 80%;
+    padding: 20px;
+    background-color: white;
+    margin-left: 20%; /* Створюємо відступ зліва для основного контенту */
+    box-sizing: border-box; /* Для коректного розподілу простору */
+    overflow-y: auto;  /* Додаємо вертикальну прокрутку для основного контенту */
+}
+
+/* активний пункт меню */
+.nav-menu li a.active {
+    background-color: #e6ccff; /* Такий самий фон, як у sidebar */
+    color: #600080;
+    font-size: 18px; /* Збільшений розмір шрифту */
+    font-weight: bold;
+}
+
+/* Стиль для заголовка */
+.main-content h2 {
+    text-align: center; /* Центруємо текст */
+    color: #600080; /* Темно-фіолетовий колір */
+    font-size: 32px; /* Збільшуємо розмір */
+    font-weight: bold; /* Жирний текст */
+    margin-bottom: 20px; /* Додаємо відступ знизу */
+}
+
+/* Стилі для таблиці */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f0ff; /* Світло-фіолетовий фон */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #600080; /* Темно-фіолетові границі */
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #8f00b3; /* Темно-фіолетовий заголовок */
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #e6ccff; /* Світло-фіолетові рядки через один */
+}
+
+tr:hover {
+    background-color: #d9b3ff; /* Виділення рядка при наведенні */
+}
+
+/* Стилі для кнопки видалення */
+.delete-button {
+    background-color: #ff4d4d; /* Червоний фон */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #cc0000; /* Темніший червоний при наведенні */
+}
+
+/* Повідомлення про помилки та успіх */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.alert.danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.alert.success {
+    background-color: #4CAF50;
+    color: white;
+}

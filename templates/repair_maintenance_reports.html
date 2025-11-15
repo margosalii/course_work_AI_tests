@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/repair_maintenance_reports.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Експлуатаційний відділ</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('repair.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('repair.repair_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('repair.repair_maintenance_reports') }}" class = "active">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('repair.repair_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Звіт про технічне обслуговування</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ім'я</th>
+                        <th>Прізвище</th>
+                        <th>Email</th>
+                        <th>Номер телефону</th>
+                        <th>Гуртожиток</th>
+                        <th>Номер кімнати</th>
+                        <th>Тип проблеми</th>
+                        <th>Опис проблеми</th>
+                        <th>Пріоритет</th>
+                        <th>Дата створення</th>
+                        <th>Дата виконання</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in maintenance_records %}
+                    <tr>
+                        <td>{{ record.first_name }}</td>
+                        <td>{{ record.last_name }}</td>
+                        <td>{{ record.email }}</td>
+                        <td>{{ record.telephone_number }}</td>
+                        <td>{{ record.dormitory }}</td>
+                        <td>{{ record.room_number }}</td>
+                        <td>{{ record.issue_type }}</td>
+                        <td>{{ record.issue_description }}</td>
+                        <td>{{ record.priority }}</td>
+                        <td>{{ record.created_at }}</td>
+                        <td>{{ record.completed_at or 'Не виконано' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

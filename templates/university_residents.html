@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/university_residents.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор університету</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('university.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('university.university_information') }}">Розміщення інформації</a></li>
+                    <li><a href="{{ url_for('university.university_statement') }}">Заяви на поселення</a></li>
+                    <li><a href="{{ url_for('university.university_residents') }}" class = "active">Мешканці гуртожитків</a></li>
+                    <li><a href="{{ url_for('university.university_recording_of_violations') }}" >Облік порушень</a></li>
+                    <li><a href="{{ url_for('university.university_user_management') }}">Управління користувачами</a></li>
+                    <li><a href="{{ url_for('university.university_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "create-announcement-title">Мешканці гуртожитків</h2>
+
+            <div class="dormitory-filter">
+                <label for="dormitory">Оберіть гуртожиток:</label>
+                <form method="get" action="{{ url_for('university.university_residents') }}">
+                    <select name="dormitory" id="dormitory" onchange="this.form.submit()">
+                        <option value="">Усі гуртожитки</option>
+                        {% for dorm in dormitories %}
+                            <option value="{{ dorm }}" {% if dorm == selected_dormitory %}selected{% endif %}>{{ dorm }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+
+            {% if residents %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Прізвище</th>
+                        <th>Імʼя</th>
+                        <th>По батькові</th>
+                        <th>Дата народження</th>
+                        <th>Ідентифікаційний код</th>
+                        <th>Email</th>
+                        <th>Телефон</th>
+                        <th>Факультет</th>
+                        <th>Курс</th>
+                        <th>Група</th>
+                        <th>Гуртожиток</th>
+                        <th>Кімната</th>
+                        <th>Період проживання</th>
+                        <th>ПІБ батьків</th>
+                        <th>Телефон батьків</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in residents %}
+                    <tr>
+                        <td>{{ r['last_name'] }}</td>
+                        <td>{{ r['first_name'] }}</td>
+                        <td>{{ r['patronymic'] }}</td>
+                        <td>{{ r['birth_date'] }}</td>
+                        <td>{{ r['identification_number'] }}</td>
+                        <td>{{ r['email'] }}</td>
+                        <td>{{ r['phone_number'] }}</td>
+                        <td>{{ r['faculty'] }}</td>
+                        <td>{{ r['course'] }}</td>
+                        <td>{{ r['group_name'] }}</td>
+                        <td>{{ r['dormitory'] }}</td>
+                        <td>{{ r['room_number'] }}</td>
+                        <td>{{ r['residence_period'] }}</td>
+                        <td>{{ r['parents_full_name'] }}</td>
+                        <td>{{ r['parents_phone_number'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>Немає мешканців для вибраного гуртожитку.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

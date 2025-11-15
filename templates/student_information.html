@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_information.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Студент</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('student.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('student.student_statement') }}">Заява на поселення</a></li>
+                    <li><a href="{{ url_for('student.student_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('student.student_e_pass') }}">Е-перепустка</a></li>
+                    <li><a href="{{ url_for('student.student_information') }}" class = "active">Інформація</a></li>
+                    <li><a href="{{ url_for('student.student_maintenance') }}" >Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('student.student_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Інформація про студента</h2>
+            <div class="student-card">
+                <p><strong>Прізвище:</strong> {{ student_info['last_name'] }}</p>
+                <p><strong>Ім'я:</strong> {{ student_info['first_name'] }}</p>
+                <p><strong>По батькові:</strong> {{ student_info['patronymic'] }}</p>
+                <p><strong>Група:</strong> {{ student_info['group_name'] }}</p>
+                <p><strong>Факультет:</strong> {{ student_info['faculty'] }}</p>
+                <p><strong>Дата народження:</strong> {{ student_info['birth_date'] }}</p>
+                <p><strong>Номер телефону:</strong> {{ student_info['phone_number'] }}</p>
+                <p><strong>Email:</strong> {{ student_info['email'] }}</p>
+                <p><strong>Номер гуртожитку:</strong> {{ student_info['dormitory'] }}</p>
+                <p><strong>Номер кімнати:</strong> {{ student_info['room_number'] }}</p>
+                <p><strong>Термін проживання:</strong> {{ student_info['residence_period'] }}</p>
+            </div>
+
+            <hr>
+            <h3>Технічне обслуговування</h3>
+            {% if maintenance %}
+                <div class="maintenance-card">
+                    {% for item in maintenance %}
+                        <p><strong>Тип проблеми:</strong> {{ item['issue_type'] }}</p>
+                        <p><strong>Опис проблеми:</strong> {{ item['issue_description'] }}</p>
+                        <p><strong>Пріоритет:</strong> {{ item['priority'] }}</p>
+                        <p><strong>Дата створення:</strong> {{ item['created_at'] }}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Немає записів про технічне обслуговування.</p>
+            {% endif %}
+
+            <hr>
+            <h3>Порушення</h3>
+            {% if violations %}
+                <div class="violations-card">
+                    {% for violation in violations %}
+                        <p><strong>Тип порушення:</strong> {{ violation['violation_type'] }}</p>
+                        <p><strong>Опис порушення:</strong> {{ violation['description'] }}</p>
+                        <p><strong>Штраф:</strong> {{ violation['penalty'] }}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Немає записів про порушення.</p>
+            {% endif %}
+
+            <hr>
+            <h3>Закріплений інвентар</h3>
+            {% if inventory %}
+                <div class="inventory-card">
+                    {% for item in inventory %}
+                        <p><strong>Тип інвентарю:</strong> {{ item['inventory_type'] }}</p>
+                        <p><strong>Назва інвентарю:</strong> {{ item['inventory_item'] }}</p>
+                        <p><strong>Код інвентарю:</strong> {{ item['inventory_code'] }}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Немає закріпленого інвентарю.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

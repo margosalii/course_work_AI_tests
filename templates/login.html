@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylelogin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Вхід</h2>
+
+        <!-- Виведення flash-повідомлень -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('authorization.login') }}">
+            <label for="email">Електронна пошта:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Увійти</button>
+        </form>
+
+        <p>Ще немає акаунта? <a href="{{ url_for('authorization.register') }}">Зареєструватися</a></p>
+    </div>
+</body>
+</html>

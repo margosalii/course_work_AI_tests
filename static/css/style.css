@@ -1,0 +1,45 @@
+/* Фонова картинка */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url('../images/kai.jpg') no-repeat center center/cover;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Контейнер для тексту та кнопок */
+.container {
+    background: rgba(0, 0, 0, 0.6); /* Трохи затемнений фон */
+    padding: 30px;
+    border-radius: 10px;
+}
+
+/* Заголовки */
+h1, h2 {
+    margin: 10px 0;
+}
+
+/* Стилі кнопок */
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    color: white;
+    background-color: #007BFF;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}

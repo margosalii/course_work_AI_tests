@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/university.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор університету</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('university.main') }}" class = "active">Головна</a></li>
+                    <li><a href="{{ url_for('university.university_information') }}">Розміщення інформації</a></li>
+                    <li><a href="{{ url_for('university.university_statement') }}">Заяви на поселення</a></li>
+                    <li><a href="{{ url_for('university.university_residents') }}">Мешканці гуртожитків</a></li>
+                    <li><a href="{{ url_for('university.university_recording_of_violations') }}" >Облік порушень</a></li>
+                    <li><a href="{{ url_for('university.university_user_management') }}">Управління користувачами</a></li>
+                    <li><a href="{{ url_for('university.university_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "create-announcement-title">Актуальні оголошення</h2>
+
+            {% for ann in announcements %}
+                <div class="announcement">
+                    <h3>{{ ann['title'] | safe}}</h3>
+                    <div class="announcement-content">
+                        {{ ann['content'] | safe }}
+                    </div>
+                    <small><em>{{ ann['created_at'] }}</em></small>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

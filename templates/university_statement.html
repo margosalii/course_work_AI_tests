@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/university_statement.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор університету</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('university.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('university.university_information') }}" >Розміщення інформації</a></li>
+                    <li><a href="{{ url_for('university.university_statement') }}" class = "active">Заяви на поселення</a></li>
+                    <li><a href="{{ url_for('university.university_residents') }}" >Мешканці гуртожитків</a></li>
+                    <li><a href="{{ url_for('university.university_recording_of_violations') }}" >Облік порушень</a></li>
+                    <li><a href="{{ url_for('university.university_user_management') }}">Управління користувачами</a></li>
+                    <li><a href="{{ url_for('university.university_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "create-announcement-title">Заяви на поселення</h2>
+            <!-- Виведення flash-повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+
+            {% if statements %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Прізвище</th>
+                            <th>Імʼя</th>
+                            <th>По батькові</th>
+                            <th>Дата народження</th>
+                            <th>Ідентифікаційний номер</th>
+                            <th>Email</th>
+                            <th>Телефон</th>
+                            <th>Факультет</th>
+                            <th>Курс</th>
+                            <th>Група</th>
+                            <th>Гуртожиток</th>
+                            <th>Кімната</th>
+                            <th>Дія</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in statements %}
+                        <tr>
+                            <td>{{ s['last_name'] }}</td>
+                            <td>{{ s['first_name'] }}</td>
+                            <td>{{ s['patronymic'] }}</td>
+                            <td>{{ s['birth_date'] }}</td>
+                            <td>{{ s['id_number'] }}</td>
+                            <td>{{ s['email'] }}</td>
+                            <td>{{ s['phone'] }}</td>
+                            <td>{{ s['faculty'] }}</td>
+                            <td>{{ s['course'] }}</td>
+                            <td>{{ s['group_name'] }}</td>
+                            <td>{{ s['dormitory'] }}</td>
+                            <td>{{ s['room_number'] }}</td>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" name="statement_id" value="{{ s['id'] }}">
+                                    <button type="submit" class="delete-button">Оброблено</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Немає заяв на поселення.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

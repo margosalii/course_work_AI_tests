@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/university_user_management.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор університету</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('university.main') }}">Головна</a></li>
+                    <li><a href="{{ url_for('university.university_information') }}">Розміщення інформації</a></li>
+                    <li><a href="{{ url_for('university.university_statement') }}">Заяви на поселення</a></li>
+                    <li><a href="{{ url_for('university.university_residents') }}">Мешканці гуртожитків</a></li>
+                    <li><a href="{{ url_for('university.university_recording_of_violations') }}" >Облік порушень</a></li>
+                    <li><a href="{{ url_for('university.main') }}" class = "active">Управління користувачами</a></li>
+                    <li><a href="{{ url_for('university.university_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class="create-announcement-title">Управління користувачами</h2>
+
+            <!-- Виведення flash-повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% if users %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Ім’я</th>
+                        <th>Прізвище</th>
+                        <th>Роль</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] }}</td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="email" value="{{ user[0] }}">
+                                <button type="submit">Видалити</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>Користувачі не знайдені</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

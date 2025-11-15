@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/university_information.css') }}">
+    <!-- Quill CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор університету</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('university.main') }}">Головна</a></li>
+                    <li><a href="{{ url_for('university.university_information') }}" class="active">Розміщення інформації</a></li>
+                    <li><a href="{{ url_for('university.university_statement') }}">Заяви на поселення</a></li>
+                    <li><a href="{{ url_for('university.university_residents') }}">Мешканці гуртожитків</a></li>
+                    <li><a href="{{ url_for('university.university_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('university.university_user_management') }}">Управління користувачами</a></li>
+                    <li><a href="{{ url_for('university.university_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "create-announcement-title">Створити оголошення</h2>
+            <!-- Виведення flash-повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+
+            <form method="POST">
+                <div class="form-group">
+                    <label>Заголовок:</label>
+                    <div id="title-editor" style="height: 50px; background-color: white;"></div>
+                    <input type="hidden" name="title" id="hidden-title">
+                </div>
+
+                <!-- Текст оголошення -->
+                <div class="form-group">
+                    <label>Текст оголошення:</label>
+                    <div id="editor" style="height: 200px; background-color: white;"></div>
+                    <input type="hidden" name="content" id="hidden-content">
+                </div>
+
+                <!-- Вибір ролі -->
+                <div class="form-group">
+                    <label for="role">Оголошення для:</label>
+                    <select id="role" name="role" required>
+                        <option value="student">Студенти</option>
+                        <option value="hostel_admin">Адміністрація гуртожитку</option>
+                        <option value="repr_admin">Експлуатаційний відділ</option>
+                        <option value="univ_admin">Адміністрація університету</option>
+                    </select>
+                </div>
+
+                <!-- Центрована кнопка -->
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="submit">Опублікувати</button>
+                </div>
+            </form>
+
+            <!-- Заголовок для створених оголошень -->
+            <h2 class = "create-announcement-title">Створені оголошення</h2>
+
+            <form method="GET" action="{{ url_for('university.university_information') }}">
+                <div class="role-filter">
+                    <label for="role_filter">Фільтрувати за роллю:</label>
+                    <select name="role_filter" id="role_filter">
+                        <option value="student" {% if 'student' in request.args.getlist('role_filter') %}selected{% endif %}>Студенти</option>
+                        <option value="hostel_admin" {% if 'hostel_admin' in request.args.getlist('role_filter') %}selected{% endif %}>Адміністрація гуртожитку</option>
+                        <option value="repr_admin" {% if 'repr_admin' in request.args.getlist('role_filter') %}selected{% endif %}>Експлуатаційний відділ</option>
+                        <option value="univ_admin" {% if 'univ_admin' in request.args.getlist('role_filter') %}selected{% endif %}>Адміністрація університету</option>
+                    </select>
+                    <button type="submit">Фільтрувати</button>
+                </div>
+            </form>
+
+            <!-- Таблиця оголошень -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Заголовок</th>
+                        <th>Для кого</th>
+                        <th>Дата створення</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for announcement in announcements %}
+                    <tr>
+                        <td>{{ announcement.title | safe }}</td>
+                        <td>{{ announcement.role }}</td>
+                        <td>{{ announcement.created_at }}</td>
+                        <td>
+                            <form action="{{ url_for('university.university_information') }}" method="POST">
+                                <input type="hidden" name="delete_id" value="{{ announcement.id }}">
+                                <button class="delete-button" type="submit">Видалити</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+        // Ініціалізація Quill для заголовка
+        var titleQuill = new Quill('#title-editor', {
+            theme: 'snow',
+            placeholder: 'Введіть заголовок...',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, 3, false] }],  // заголовки
+                    ['bold', 'italic', 'underline'],  // форматування тексту
+                    [{ 'color': [] }, { 'background': [] }],  // кольори тексту та фону
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],  // маркери та номери
+                    ['clean']  // кнопка очищення форматування
+                ]
+            }
+        });
+
+        // Ініціалізація Quill для тексту оголошення
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: 'Введіть текст оголошення...',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['clean']
+                ]
+            }
+        });
+
+        // Коли форма надсилається, зберігаємо HTML контент з Quill в приховані поля
+        document.querySelector('form').onsubmit = function () {
+            var content = document.querySelector('input[name=content]');
+            var title = document.querySelector('input[name=title]');
+            content.value = quill.root.innerHTML;
+            title.value = titleQuill.root.innerHTML;
+        };
+    </script>
+</body>
+</html>

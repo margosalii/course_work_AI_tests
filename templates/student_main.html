@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Студент</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('student.main') }}" class = "active">Головна</a></li>
+                    <li><a href="{{ url_for('student.student_statement') }}">Заява на поселення</a></li>
+                    <li><a href="{{ url_for('student.student_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('student.student_e_pass') }}">Е-перепустка</a></li>
+                    <li><a href="{{ url_for('student.student_information') }}">Інформація</a></li>
+                    <li><a href="{{ url_for('student.student_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('student.student_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2 class = "create-announcement-title">Актуальні оголошення</h2>
+
+            {% for ann in announcements %}
+                <div class="announcement">
+                    <h3>{{ ann['title'] | safe}}</h3>
+                    <div class="announcement-content">
+                        {{ ann['content'] | safe }}
+                    </div>
+                    <small><em>{{ ann['created_at'] }}</em></small>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

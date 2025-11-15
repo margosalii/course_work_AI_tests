@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Е-кабінет</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/kai_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hostel_settlement.css') }}">
+
+</head>
+<body>
+    <div class="student-container">
+        <div class="sidebar">
+            <h1>Е-кабінет</h1>
+            <h2>Адміністратор гуртожитку</h2>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('hostel.main') }}" >Головна</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_e_queue') }}">Е-черга</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_settlement') }}" class = "active">Поселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_residents') }}">Облік мешканців</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_eviction') }}">Виселення</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_violation_rules') }}">Порушення правил проживання</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_recording_of_violations') }}">Облік порушень</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_add_inventory') }}">Закріпити інвентар</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_inventory_accounting') }}">Облік інвентарю</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance') }}">Технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_maintenance_reports') }}">Звіт про технічне обслуговування</a></li>
+                    <li><a href="{{ url_for('hostel.hostel_exit') }}">Вихід</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h2>Інформація про студента</h2>
+
+            <!-- Повідомлення -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('hostel.hostel_settlement') }}">
+                <div class="form-group">
+                    <label for="last_name">Прізвище:</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="first_name">Ім'я:</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="patronymic">По-батькові:</label>
+                    <input type="text" id="patronymic" name="patronymic" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birth_date">Дата народження:</label>
+                    <input type="date" id="birth_date" name="birth_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="identification_number">Ідентифікаційний номер (10 цифр):</label>
+                    <input type="text" id="identification_number" name="identification_number" required pattern="\d{10}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">Номер телефону (в форматі + (380) 99 123 4565):</label>
+                    <input type="text" id="phone_number" name="phone_number">
+                </div>
+
+                <div class="form-group">
+                    <label for="faculty">Факультет:</label>
+                    <input type="text" id="faculty" name="faculty" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Курс:</label>
+                    <select id="course" name="course" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="group_name">Група (в форматі: Б-121-21-1-ПІ):</label>
+                    <input type="text" id="group_name" name="group_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dormitory">Гуртожиток:</label>
+                    <select id="dormitory" name="dormitory" required>
+                        <option value="Гуртожиток №1">Гуртожиток №1</option>
+                        <option value="Гуртожиток №3">Гуртожиток №3</option>
+                        <option value="Гуртожиток №4">Гуртожиток №4</option>
+                        <option value="Гуртожиток №5">Гуртожиток №5</option>
+                        <option value="Гуртожиток №6">Гуртожиток №6</option>
+                        <option value="Гуртожиток №7">Гуртожиток №7</option>
+                        <option value="Гуртожиток №8">Гуртожиток №8</option>
+                        <option value="Гуртожиток №9">Гуртожиток №9</option>
+                        <option value="Гуртожиток готельного типу №10">Гуртожиток готельного типу №10</option>
+                        <option value="Гуртожиток №11">Гуртожиток №11</option>
+                        <option value="Гуртожиток готельного типу №12">Гуртожиток готельного типу №12</option>
+                        <option value="Гуртожиток №13">Гуртожиток №13</option>
+                        <option value="Готельний блок">Готельний блок</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="room_number">Номер кімнати:</label>
+                    <input type="text" id="room_number" name="room_number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="residence_period">Термін проживання (в форматі 20.03.2025 - 21.03.2025):</label>
+                    <input type="text" id="residence_period" name="residence_period" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="parents_full_name">ПІБ батьків:</label>
+                    <input type="text" id="parents_full_name" name="parents_full_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="parents_phone_number">Телефон батьків (в форматі + (380) 99 123 4565):</label>
+                    <input type="text" id="parents_phone_number" name="parents_phone_number">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Заселити</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
